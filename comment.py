@@ -7,9 +7,10 @@ class Comment:
 
 	def __init__(self, json):
 		data = json['data']
+		print data
 		self.raw_body = data['body'] if 'body' in data else data['selftext']
-		if 'children' in data:
-			self.children = [Comment(child) for child in data['children'] if 'data' in child and 'body' in child['data']]
+		if 'replies' in data and 'data' in data['replies'] and 'children' in data['replies']['data']:
+			self.children = [Comment(child) for child in data['replies']['data']['children'] if 'data' in child and 'body' in child['data']]
 		else:
 			self.children = []
 		self.score = data['score']

@@ -14,6 +14,7 @@ class Thread:
 		topic.children = comments
 
 		self.comment_tree = topic
+		self.comment_list = flatten_comment_tree(self.comment_tree)
 
 
 	def tag_traits(self, comment=None, parent_traits=[]):
@@ -25,8 +26,15 @@ class Thread:
 		for child in comment.children:
 			self.tag_traits(child, comment.traits)
 
+
 	def train(self):
 		pass
 
 	def predict(self):
-		pass
+		pass	
+
+def flatten_comment_tree(comment, comment_list=[]):
+	comment_list.append(comment)
+	for child in comment.children:
+		comment_list = flatten_comment_tree(child, comment_list)
+	return comment_list
