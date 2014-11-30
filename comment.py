@@ -6,14 +6,10 @@ spaces = regex("\s+")
 class Comment:
 
 	def __init__(self, json):
-		if 'data' not in json:	
-			return None
 		data = json['data']
-		if 'body' not in data:
-			return None
-		self.raw_body = data['body']
+		self.raw_body = data['body'] if 'body' in data else data['selftext']
 		if 'children' in data:
-			self.children = [Comment(child) for child in data['children'] if 'body' in child['data']]
+			self.children = [Comment(child) for child in data['children'] if 'data' in child and 'body' in child['data']]
 		else:
 			self.children = []
 		self.score = data['score']
