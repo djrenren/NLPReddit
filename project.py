@@ -11,10 +11,7 @@ def main(args):
 
 	thread.tag_traits()
 
-	thread.train()
-
-	thread.predict()
-
+	thread.train_and_test()
 
 	
 
